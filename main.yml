@@ -20,7 +20,7 @@
     # - p7zip
 
     # - bash
-    - make
+    # - make
     # - jdk
     # - python3
     # - node
@@ -45,7 +45,7 @@
     # - pandoc
     # - consolas
     # - hugo
-    # - black
+    - black
     # - mpd
     # - mpc
     # - mpdscribble

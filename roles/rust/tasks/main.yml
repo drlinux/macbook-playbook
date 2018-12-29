@@ -7,38 +7,43 @@
 
 - name: Install Rust
   command: >
-    "{{ downloads_directory }}/rustup-init" -y --no-modify-path
+    {{ downloads_directory }}/rustup-init -y --no-modify-path
 
 - name: Fetch Rust source code
   command: >
-    rustup component add rust-src
+    {{ home_directory }}/.cargo/bin/rustup component add rust-src
 
 - name: Install Rust bash completions
   shell: >
-    rustup completions bash > "$(brew --prefix)/etc/bash_completion.d/rustup.bash-completion"
+    {{ home_directory }}/.cargo/bin/rustup completions bash > "$(brew --prefix)/etc/bash_completion.d/rustup.bash-completion"
+
+- name: Create fish completions direcotyr
+  file:
+    path: "{{ home_directory }}/.config/fish/completions"
+    state: directory
 
 - name: Install Rust fish completions
   shell: >
-    rustup completions fish > ~/.config/fish/completions/rustup.fish
+    {{ home_directory }}/.cargo/bin/rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 - name: Set up nightly Rust (racer dependency)
   command: >
-    rustup toolchain add nightly
+    {{ home_directory }}/.cargo/bin/rustup toolchain add nightly
 
 - name: Install cargo-script
   command: >
-    cargo install --force {{ item }}
+    {{ home_directory }}/.cargo/bin/cargo install --force {{ item }}
   with_items:
     - cargo-script
     - rustfmt
 
 - name: Add rustup components
   command: >
-    rustup component add rls-preview rust-analysis rust-src --toolchain nightly
+    {{ home_directory }}/.cargo/bin/rustup component add rls-preview rust-analysis rust-src --toolchain nightly
 
 - name: Install racer
   command: >
-    cargo +nightly install --force {{ item }}
+    {{ home_directory }}/.cargo/bin/cargo +nightly install --force {{ item }}
   with_items:
     - racer
 

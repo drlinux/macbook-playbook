@@ -48,7 +48,7 @@ upgrade_ansible:
 # python3 -m pip install ...
 bootstrap:
 	@sudo -H easy_install pip
-	@sudo -H $(PIP) install --user ansible
+	@$(PIP) install --user ansible
 	@$(ANSIBLE_COMMAND_LOCAL_WITH_VAULT) $(ANSIBLE_PLAYBOOKS_DIRECTORY)/bootstrap.yml
 	@test -s $(ANSIBLE_VAULT_PASSWORD_FILE) \
 		|| echo ATTENTION: Please create '$(PWD)/$(ANSIBLE_VAULT_PASSWORD_FILE)' with this project\'s Ansible Vault password
